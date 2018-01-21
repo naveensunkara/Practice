@@ -1,0 +1,49 @@
+<div class="container">
+  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+    <h1>CRS Form Validations</h1>
+    <h2>Sign On</h2>
+    <div class="form-group">
+      <label for="userId">USER ID</label>
+      <input type="text" id="userId" formControlName="userId" class="form-control">
+      <div *ngIf="formErrors.userId" class="alert alert-danger">
+        {{ formErrors.userId }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="text" id="password" formControlName="password" class="form-control" (focus)="mask = false" (blur)="mask = true" appMask> 
+      <div *ngIf="formErrors.password" class="alert alert-danger">
+        {{ formErrors.password }}
+      </div>
+    </div>
+    <h2>Registration</h2>
+    <div class="form-group">
+      <label for="cardNumber">Card Number</label>
+      <input type="text" id="cardNumber" formControlName="card_number" class="form-control">
+      <div *ngIf="formErrors.card_number" class="alert alert-danger">
+        {{ formErrors.card_number }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cardName">Name as it appears on your Card</label>
+      <input type="text" id="cardName" formControlName="card_name" class="form-control">
+      <div *ngIf="formErrors.card_name" class="alert alert-danger">
+        {{ formErrors.card_name }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cvv">Security Code</label>
+      <input type="text" id="cvv" formControlName="cvv" class="form-control">
+      <div *ngIf="formErrors.cvv" class="alert alert-danger">
+        {{ formErrors.cvv }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="ssn">Security Code</label>
+      <input type="text" id="ssn" formControlName="ssn" class="form-control">
+      <div *ngIf="formErrors.ssn" class="alert alert-danger">
+        {{ formErrors.ssn }}
+      </div>
+    </div>
+  </form>
+</div>

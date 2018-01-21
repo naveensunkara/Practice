@@ -1,0 +1,9 @@
+<form [formGroup]="crsForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="userId">USER ID</label>
+    <input type="text" name="userId" id="userId" class="form-control" FormControlName="userId" placeholder="userId" required>
+    <div *ngIf="formErrors.userId" class="alert alert-danger">
+      {{ formErrors.userId }}
+    </div>
+  </div>
+</form>
