@@ -26,6 +26,7 @@ export class Validator {
       }
       if(control && control.dirty && !control.valid) {
         Object.keys(control.errors).forEach((ek) => {
+          console.log(ek)
           if(ek == "pattern" && typeof this.config[ck][ek] != 'string'){
             Object.keys(this.config[ck][ek]).forEach((pk) =>{
               if(control.errors[ek].requiredPattern == this.regex[pk])

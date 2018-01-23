@@ -5,10 +5,11 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 import { HeroFormReactiveComponent } from "./hero-form-reactive.component";
 import { MaskDirective } from '../shared/mask.directive';
+import { ValidateDirective } from '../shared/validate.directive';
 
 @NgModule({
   imports: [ ReactiveFormsModule, CommonModule ],
-  declarations: [HeroFormReactiveComponent, MaskDirective],
+  declarations: [HeroFormReactiveComponent, MaskDirective, ValidateDirective],
   exports: [HeroFormReactiveComponent]
 })
 export class HeroFormReactiveModule { }

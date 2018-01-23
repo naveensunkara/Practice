@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener, Input, AfterViewInit } from '@angu
 })
 export class MaskDirective implements AfterViewInit {
   @Input() mask: string;
-  unmaskedValue: string;
+  unmaskedValue: string = '';
   dot = decodeURI("%E2%80%A2");
   constructor(private elRef: ElementRef) {}
   @HostListener('blur') onblur() {
@@ -23,7 +23,6 @@ export class MaskDirective implements AfterViewInit {
     let val = this.unmaskedValue;
     val = val.replace(/./g, decodeURI("%E2%80%A2"));
     this.elRef.nativeElement.value = val;
-    console.log(val)
   }
   ngAfterViewInit(): void {}
 }

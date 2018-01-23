@@ -1,6 +1,6 @@
 /* tslint:disable: member-ordering forin */
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormGroup, FormBuilder, Validators, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 import { Validator } from "../shared/validator";
 import { CrsPatterns } from '../shared/pattern';
@@ -26,7 +26,7 @@ export class HeroFormReactiveComponent implements OnInit {
 
   config = {
     "userId": {
-      required:  "Please enter your User ID to sign on." ,
+      0:  "Please enter your User ID to sign on." ,
       minlength: "Your User ID must be five to 50 characters in length.",
       maxlength: "Your User ID must be five to 50 characters in length.",
       pattern: "Please try again. Certain special characters are not allowed."
@@ -63,7 +63,8 @@ export class HeroFormReactiveComponent implements OnInit {
   };
   
   validator:Validator;
-
+  @ViewChild('userid') el;
+  vali: ValidatorFn[] = [];
   heroForm: FormGroup;
   constructor(private fb: FormBuilder) {
     this.validator = new Validator(this.config);
@@ -71,11 +72,13 @@ export class HeroFormReactiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+    let a = this.el.validatorArray(this.el.validationRules);
+    console.log(a)
   }
-
+  
   buildForm(): void {
     this.heroForm = this.fb.group({
-      "userId": ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50), Validators.pattern(this.regex.user_id)]],
+      "userId": ['', this.el.validatorArray(this.el.validationRules)],
       "password": ['', [Validators.required, Validators.minLength(5), Validators.maxLength(32), Validators.pattern(this.regex.password)]],
       "card_number": ['', [Validators.required, Validators.pattern(this.regex.card_number_length), Validators.pattern(this.regex.card_number_format)]],
       "card_name": ['', [Validators.required, Validators.minLength(4), Validators.maxLength(30), Validators.pattern(this.regex.card_name)]],
@@ -90,7 +93,7 @@ export class HeroFormReactiveComponent implements OnInit {
 
   onValueChanged(data?: any) {
     if(!this.heroForm) { return; }
-    this.formErrors = this.validator.validate(this.heroForm);
+    this.formErrors = this.validator.validate(this.heroForm);    
   }
 
   formErrors = {};

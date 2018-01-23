@@ -4,7 +4,7 @@
     <h2>Sign On</h2>
     <div class="form-group">
       <label for="userId">USER ID</label>
-      <input type="text" id="userId" formControlName="userId" class="form-control">
+      <input type="text" id="userId" formControlName="userId" class="form-control" validate="required: Please enter your User ID to sign on. || minlength_5: Your User ID must be five to 50 characters in length. || maxlength_50: Your User ID must be five to 50 characters in length. || user_id: Please try again. Certain special characters are not allowed." #userid="validateRules" >
       <div *ngIf="formErrors.userId" class="alert alert-danger">
         {{ formErrors.userId }}
       </div>
