@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="heroForm" (ngSubmit)="onSubmit(heroForm)">
     <h1>CRS Form Validations</h1>
     <h2>Sign On</h2>
     <div class="form-group">
@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="text" id="password" formControlName="password" class="form-control" mask="password" validate="not_empty: Please enter your Password to sign on. || too_few_characters: Your Password must be six to 32 characters in length. || password: Please try again. Certain special characters are not allowed." #password> 
+      <input type="text" id="password" formControlName="password" class="form-control" mask="password" validate="required: Please enter your Password to sign on. || minlength_6: Your Password must be six to 32 characters in length. || maxlength_32: Your Password must be six to 32 characters in length. || password: Please try again. Certain special characters are not allowed." #password> 
       <div *ngIf="formErrors.password" class="alert alert-danger">
         {{ formErrors.password }}
       </div>
@@ -26,24 +26,25 @@
     </div>
     <div class="form-group">
       <label for="cardName">Name as it appears on your Card</label>
-      <input type="text" id="cardName" formControlName="card_name" class="form-control" validate="not_empty: Please enter the Name as it Appears on Your Card.|| too_few_characters: Please enter the Name as it Appears on Your Card.|| card_name: Please enter the Name as it Appears on Your Card without using numbers. Certain special characters are not allowed.|| server_invalid: Please enter the Name as it Appears on Your Card without using numbers. Certain special characters are not allowed." #cardName>
+      <input type="text" id="cardName" formControlName="card_name" class="form-control" validate="required: Please enter the Name as it Appears on Your Card.|| minlength_5: Please enter the Name as it Appears on Your Card.|| card_name: Please enter the Name as it Appears on Your Card without using numbers. Certain special characters are not allowed." #cardName>
       <div *ngIf="formErrors.card_name" class="alert alert-danger">
         {{ formErrors.card_name }}
       </div>
     </div>
     <div class="form-group">
       <label for="cvv">Security Code</label>
-      <input type="text" id="cvv" formControlName="cvv" class="form-control" validate="not_empty:Please enter your Security Code. || cvv: Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters. || too_many_characters: Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters." #cvv>
+      <input type="text" id="cvv" formControlName="cvv" class="form-control" validate="required:Please enter your Security Code. || cvv: Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters. || minlength_3: Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters. || maxlength_4: Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters." #cvv>
       <div *ngIf="formErrors.cvv" class="alert alert-danger">
         {{ formErrors.cvv }}
       </div>
     </div>
     <div class="form-group">
       <label for="ssn">Social Security Number</label>
-      <input type="text" id="ssn" formControlName="ssn" class="form-control" validate="not_empty: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number. || last_four_digits: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only. || too_many_characters: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only." #ssn>
+      <input type="text" id="ssn" formControlName="ssn" class="form-control" validate="required: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number. || last_four_digits: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only. || minlength_4: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only. || maxlength_4: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only." #ssn>
       <div *ngIf="formErrors.ssn" class="alert alert-danger">
         {{ formErrors.ssn }}
       </div>
     </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
   </form>
 </div>

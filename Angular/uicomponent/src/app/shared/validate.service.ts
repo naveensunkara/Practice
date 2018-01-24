@@ -25,7 +25,7 @@ export class ValidateService {
       fieldRule[ruleName] = ruleMessage;
     })
     this.validationRules[field] = fieldRule;
-    Object.keys(this.validationRules).forEach((v) =>{
+    Object.keys(this.validationRules[field]).forEach((v) =>{
       if(v == 'required'){
         validateArray.push(Validators.required);
       }
@@ -54,7 +54,7 @@ export class ValidateService {
       } else {
         control = (<NgForm>ngForm).form.get(ck);
       }
-      if(control && control.dirty && !control.valid) {
+      if(control && !control.valid) {
         Object.keys(control.errors).forEach((ek) => {
           if(ek == "pattern" && typeof config[ck][ek] != 'string'){
             Object.keys(config[ck][ek]).forEach((pk) =>{

@@ -15,7 +15,8 @@ export class HeroFormReactiveComponent implements OnInit {
 
   submitted = false;
 
-  onSubmit() {
+  onSubmit(form: FormGroup) {
+    console.log(form.status)
     this.submitted = true;
   }
   
@@ -48,6 +49,7 @@ export class HeroFormReactiveComponent implements OnInit {
 
   onValueChanged(data?: any) {
     if(!this.heroForm) { return; }
+    console.log(this.heroForm.controls.userId)
     this.formErrors = this.validateService.validate(this.heroForm,this.regex.config);
   }
 
