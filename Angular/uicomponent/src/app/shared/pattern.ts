@@ -51,4 +51,41 @@ export class CrsPatterns{
     membernumber_starts_with: RegExp =/7081[0-9]*/;
     five_repeating_characters: RegExp =/(.)\1{4,}/;
     exclude_zip_code: RegExp =/^([0,9])\1{4}$/;
+    config = {
+        "userId": {
+          required:  "Please enter your User ID to sign on." ,
+          minlength: "Your User ID must be five to 50 characters in length.",
+          maxlength: "Your User ID must be five to 50 characters in length.",
+          pattern: "Please try again. Certain special characters are not allowed."
+        },
+        "password": {
+          required:  "Please enter your User ID to sign on." ,
+          minlength: "Your User ID must be five to 32 characters in length.",
+          maxlength: "Your User ID must be five to 32 characters in length.",
+          pattern: "Please try again. Certain special characters are not allowed."
+        },
+        "card_number": {
+          required:  "Please enter a valid Card Number." ,
+          pattern: {
+            card_number_format: "Please enter a valid Card Number using numbers only.",
+            card_number_length: "Please enter a valid Card Number."
+          }
+        },
+        "card_name": {
+          required:  "Please enter the Name as it Appears on Your Card." ,
+          minlength: "Please enter the Name as it Appears on Your Card.",
+          maxlength: "Please enter the Name as it Appears on Your Card.",
+          pattern: "Please enter the Name as it Appears on Your Card without using numbers. Certain special characters are not allowed."
+        },
+        "cvv": {
+          required:  "Please enter your Security Code." ,
+          maxlength: "Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters.",
+          pattern: "Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters."
+        },
+        "ssn": {
+          required:  "Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number." ,
+          maxlength: "Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only.",
+          pattern: "Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only."
+        }
+    };
 }

@@ -4,14 +4,14 @@
     <h2>Sign On</h2>
     <div class="form-group">
       <label for="userId">USER ID</label>
-      <input type="text" id="userId" formControlName="userId" class="form-control" validate="required: Please enter your User ID to sign on. || minlength_5: Your User ID must be five to 50 characters in length. || maxlength_50: Your User ID must be five to 50 characters in length. || user_id: Please try again. Certain special characters are not allowed." #userid="validateRules" >
+      <input type="text" id="userId" formControlName="userId" class="form-control" validate="required: Please enter your User ID to sign on. || minlength_5: Your User ID must be five to 50 characters in length. || maxlength_50: Your User ID must be five to 50 characters in length. || user_id: Please try again. Certain special characters are not allowed." #userid>
       <div *ngIf="formErrors.userId" class="alert alert-danger">
         {{ formErrors.userId }}
       </div>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="text" id="password" formControlName="password" class="form-control" mask="password" (focus)="mask = false" (blur)="mask = true" appMask> 
+      <input type="text" id="password" formControlName="password" class="form-control" mask="password" validate="not_empty: Please enter your Password to sign on. || too_few_characters: Your Password must be six to 32 characters in length. || password: Please try again. Certain special characters are not allowed." #password> 
       <div *ngIf="formErrors.password" class="alert alert-danger">
         {{ formErrors.password }}
       </div>
@@ -19,28 +19,28 @@
     <h2>Registration</h2>
     <div class="form-group">
       <label for="cardNumber">Card Number</label>
-      <input type="text" id="cardNumber" formControlName="card_number" class="form-control">
+      <input type="text" id="cardNumber" formControlName="card_number" class="form-control" validate="card_number_format: Please enter a valid Card Number using numbers only.|| card_number_length: Please enter a valid Card Number." #cardNumber>
       <div *ngIf="formErrors.card_number" class="alert alert-danger">
         {{ formErrors.card_number }}
       </div>
     </div>
     <div class="form-group">
       <label for="cardName">Name as it appears on your Card</label>
-      <input type="text" id="cardName" formControlName="card_name" class="form-control">
+      <input type="text" id="cardName" formControlName="card_name" class="form-control" validate="not_empty: Please enter the Name as it Appears on Your Card.|| too_few_characters: Please enter the Name as it Appears on Your Card.|| card_name: Please enter the Name as it Appears on Your Card without using numbers. Certain special characters are not allowed.|| server_invalid: Please enter the Name as it Appears on Your Card without using numbers. Certain special characters are not allowed." #cardName>
       <div *ngIf="formErrors.card_name" class="alert alert-danger">
         {{ formErrors.card_name }}
       </div>
     </div>
     <div class="form-group">
       <label for="cvv">Security Code</label>
-      <input type="text" id="cvv" formControlName="cvv" class="form-control">
+      <input type="text" id="cvv" formControlName="cvv" class="form-control" validate="not_empty:Please enter your Security Code. || cvv: Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters. || too_many_characters: Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters." #cvv>
       <div *ngIf="formErrors.cvv" class="alert alert-danger">
         {{ formErrors.cvv }}
       </div>
     </div>
     <div class="form-group">
-      <label for="ssn">Security Code</label>
-      <input type="text" id="ssn" formControlName="ssn" class="form-control">
+      <label for="ssn">Social Security Number</label>
+      <input type="text" id="ssn" formControlName="ssn" class="form-control" validate="not_empty: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number. || last_four_digits: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only. || too_many_characters: Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only." #ssn>
       <div *ngIf="formErrors.ssn" class="alert alert-danger">
         {{ formErrors.ssn }}
       </div>

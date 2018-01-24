@@ -1,9 +1,10 @@
 /* tslint:disable: member-ordering forin */
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 import { Validator } from "../shared/validator";
 import { CrsPatterns } from '../shared/pattern';
+import { ValidateService } from '../shared/validate.service';
 
 @Component({
   selector: "hero-form-reactive3",
@@ -17,83 +18,37 @@ export class HeroFormReactiveComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
   }
-
-  // Reset the form with a new hero AND restore 'pristine' class state
-  // by toggling 'active' flag which causes the form
-  // to be removed/re-added in a tick via NgIf
-  // TODO: Workaround until NgForm has a reset method (#6822)
-  active = true;
-
-  config = {
-    "userId": {
-      0:  "Please enter your User ID to sign on." ,
-      minlength: "Your User ID must be five to 50 characters in length.",
-      maxlength: "Your User ID must be five to 50 characters in length.",
-      pattern: "Please try again. Certain special characters are not allowed."
-    },
-    "password": {
-      required:  "Please enter your User ID to sign on." ,
-      minlength: "Your User ID must be five to 32 characters in length.",
-      maxlength: "Your User ID must be five to 32 characters in length.",
-      pattern: "Please try again. Certain special characters are not allowed."
-    },
-    "card_number": {
-      required:  "Please enter a valid Card Number." ,
-      pattern: {
-        card_number_format: "Please enter a valid Card Number using numbers only.",
-        card_number_length: "Please enter a valid Card Number."
-      }
-    },
-    "card_name": {
-      required:  "Please enter the Name as it Appears on Your Card." ,
-      minlength: "Please enter the Name as it Appears on Your Card.",
-      maxlength: "Please enter the Name as it Appears on Your Card.",
-      pattern: "Please enter the Name as it Appears on Your Card without using numbers. Certain special characters are not allowed."
-    },
-    "cvv": {
-      required:  "Please enter your Security Code." ,
-      maxlength: "Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters.",
-      pattern: "Please re-enter your Security Code. Your entry must have 3 or 4 numbers, and cannot contain letters or special characters."
-    },
-    "ssn": {
-      required:  "Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number." ,
-      maxlength: "Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only.",
-      pattern: "Please enter the Last 4 Digits of the Primary Cardholder's Social Security Number using numbers only."
-    }
-  };
   
-  validator:Validator;
-  @ViewChild('userid') el;
-  vali: ValidatorFn[] = [];
-  heroForm: FormGroup;
-  constructor(private fb: FormBuilder) {
-    this.validator = new Validator(this.config);
-  }
+  @ViewChild('userid') userid:ElementRef;
+  @ViewChild('password') password:ElementRef;
+  @ViewChild('cardNumber') cardNumber:ElementRef;
+  @ViewChild('cardName') cardName:ElementRef;
+  @ViewChild('cvv') cvv:ElementRef;
+  @ViewChild('ssn') ssn:ElementRef;
 
+  heroForm: FormGroup;
+  constructor(private fb: FormBuilder, private validateService: ValidateService) {}
   ngOnInit(): void {
     this.buildForm();
-    let a = this.el.validatorArray(this.el.validationRules);
-    console.log(a)
   }
   
   buildForm(): void {
     this.heroForm = this.fb.group({
-      "userId": ['', this.el.validatorArray(this.el.validationRules)],
-      "password": ['', [Validators.required, Validators.minLength(5), Validators.maxLength(32), Validators.pattern(this.regex.password)]],
-      "card_number": ['', [Validators.required, Validators.pattern(this.regex.card_number_length), Validators.pattern(this.regex.card_number_format)]],
-      "card_name": ['', [Validators.required, Validators.minLength(4), Validators.maxLength(30), Validators.pattern(this.regex.card_name)]],
-      "cvv": ['', [Validators.required, Validators.maxLength(4), Validators.pattern(this.regex.cvv)]],
-      "ssn": ['', [Validators.required, Validators.maxLength(4), Validators.pattern(this.regex.last_four_digits)]]
+      "userId": ['', this.validateService.setRules(this.userid.nativeElement.attributes.validate.nodeValue, 'userId')],
+      "password": ['', this.validateService.setRules(this.password.nativeElement.attributes.validate.nodeValue, 'password')],
+      "card_number": ['', this.validateService.setRules(this.cardNumber.nativeElement.attributes.validate.nodeValue, 'card_number')],
+      "card_name": ['', this.validateService.setRules(this.cardName.nativeElement.attributes.validate.nodeValue, 'card_name')],
+      "cvv": ['', this.validateService.setRules(this.cvv.nativeElement.attributes.validate.nodeValue, 'cvv')],
+      "ssn": ['', this.validateService.setRules(this.ssn.nativeElement.attributes.validate.nodeValue, 'ssn')]
     });
     this.heroForm.valueChanges.subscribe(data => this.onValueChanged(data));
-
     this.onValueChanged(); // (re)set validation messages now
   }
 
 
   onValueChanged(data?: any) {
     if(!this.heroForm) { return; }
-    this.formErrors = this.validator.validate(this.heroForm);    
+    this.formErrors = this.validateService.validate(this.heroForm,this.regex.config);
   }
 
   formErrors = {};
